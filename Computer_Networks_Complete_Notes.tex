@@ -1,0 +1,1026 @@
+\documentclass[12pt,a4paper]{report}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{float}
+
+% Page setup
+\geometry{margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+
+% Colors
+\definecolor{examdef}{RGB}{0, 102, 204}
+\definecolor{concept}{RGB}{0, 153, 76}
+\definecolor{example}{RGB}{204, 102, 0}
+\definecolor{warning}{RGB}{204, 0, 0}
+
+% Custom boxes
+\newtcolorbox{exambox}[1]{
+  colback=examdef!5!white,
+  colframe=examdef!75!black,
+  title=#1,
+  fonttitle=\bfseries
+}
+
+\newtcolorbox{conceptbox}[1]{
+  colback=concept!5!white,
+  colframe=concept!75!black,
+  title=#1,
+  fonttitle=\bfseries
+}
+
+\newtcolorbox{examplebox}[1]{
+  colback=example!5!white,
+  colframe=example!75!black,
+  title=#1,
+  fonttitle=\bfseries
+}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Computer Networks - Complete Study Guide},
+    pdfpagemode=FullScreen,
+}
+
+% Title page
+\title{
+    \huge\textbf{Computer Networks} \\
+    \Large Complete Study Guide \\
+    \vspace{1cm}
+    \large Chapters 1-6: Conceptual Understanding \\
+    \vspace{0.5cm}
+    \normalsize Final Exam Preparation
+}
+\author{Comprehensive Notes with Diagrams and Examples}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% ============================================
+% CHAPTER 1: Computer Networks and Internet
+% ============================================
+
+\chapter{Computer Networks and the Internet}
+
+\section{Nuts-and-Bolts Description}
+
+\begin{exambox}{Definition: The Internet}
+The Internet is a worldwide network infrastructure connecting billions of computing devices (hosts/end systems) through communication links, packet switches, and standardized protocols.
+\end{exambox}
+
+\subsection{Key Components}
+
+\subsubsection{Hosts / End Systems}
+\begin{itemize}
+    \item Computing devices at network edge
+    \item Examples: PCs, smartphones, servers, IoT devices
+    \item Run network applications
+    \item Connected via communication links
+\end{itemize}
+
+\begin{conceptbox}{Conceptual Understanding}
+\textbf{Why "End Systems"?} \\
+Devices sit at the EDGE of network. Applications run here, not in network core. Think of them as the starting and ending points of all communication.
+\end{conceptbox}
+
+\subsubsection{Communication Links}
+\begin{itemize}
+    \item Physical media connecting devices
+    \item Types: Fiber optic, coaxial cable, copper wire, wireless
+    \item Transmission rate measured in bps (bits per second)
+    \item Examples: 100 Mbps Ethernet, 1 Gbps Fiber
+\end{itemize}
+
+\subsubsection{Packet Switches}
+\begin{itemize}
+    \item \textbf{Routers}: Network layer, forward packets based on IP
+    \item \textbf{Link-layer switches}: Access networks, forward based on MAC
+    \item Intermediate devices that forward packets toward destination
+\end{itemize}
+
+\subsection{Internet Service Providers (ISPs)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{ISP Type} & \textbf{Description} \\
+\hline
+Tier 1 & Global backbone providers (AT\&T, Sprint) \\
+Tier 2 & Regional ISPs connecting to Tier 1 \\
+Tier 3 & Local access ISPs (last mile to homes) \\
+Mobile & Cellular networks (4G, 5G) \\
+\hline
+\end{tabular}
+\caption{ISP Hierarchy}
+\end{table}
+
+\subsection{Protocols and Standards}
+
+\begin{itemize}
+    \item \textbf{TCP/IP}: Core Internet protocols
+    \item \textbf{IETF}: Internet Engineering Task Force
+    \item \textbf{RFCs}: Request for Comments ($\sim$9000 documents)
+    \item \textbf{IEEE}: Standards for Ethernet (802.3), WiFi (802.11)
+\end{itemize}
+
+% ============================================
+\section{Access Networks}
+
+\subsection{DSL (Digital Subscriber Line)}
+
+\begin{exambox}{Definition: DSL}
+DSL is broadband access using existing telephone lines with frequency division multiplexing to provide simultaneous data and voice services.
+\end{exambox}
+
+\textbf{How DSL Works:}
+\begin{enumerate}
+    \item Home DSL modem connects to phone line
+    \item Splitter separates voice (0-4 kHz) and data (4 kHz-1 MHz)
+    \item DSLAM at central office separates signals
+    \item Data routed to Internet, voice to telephone network
+\end{enumerate}
+
+\textbf{Characteristics:}
+\begin{itemize}
+    \item Asymmetric: Download $>$ Upload
+    \item Dedicated line (not shared)
+    \item Distance limited: 5-10 miles from CO
+    \item Typical speeds: 24-52 Mbps down, 3.5-16 Mbps up
+\end{itemize}
+
+\subsection{Cable Internet}
+
+\begin{exambox}{Definition: Cable Internet}
+Cable Internet uses existing cable TV infrastructure with hybrid fiber-coax (HFC) to provide high-speed Internet access.
+\end{exambox}
+
+\textbf{Architecture:}
+\begin{itemize}
+    \item Fiber optic from head end to neighborhood junction
+    \item Coaxial cable to individual homes
+    \item Cable modem at home, CMTS at head end
+\end{itemize}
+
+\textbf{Key Feature: Shared Broadcast Medium}
+\begin{examplebox}{Bandwidth Sharing Example}
+10 homes share 100 Mbps coaxial cable:
+\begin{itemize}
+    \item All 10 active: $\sim$10 Mbps each
+    \item 1 active: Full 100 Mbps
+    \item Bandwidth varies with neighborhood usage
+\end{itemize}
+\end{examplebox}
+
+\subsection{FTTH (Fiber To The Home)}
+
+\begin{itemize}
+    \item Optical fiber directly to homes
+    \item Extremely high speeds: 100 Mbps - 10 Gbps
+    \item PON architecture: OLT → Splitter → ONTs
+    \item Low signal loss, immune to interference
+\end{itemize}
+
+\subsection{Comparison of Access Technologies}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Technology} & \textbf{Speed} & \textbf{Shared?} & \textbf{Infrastructure} & \textbf{Cost} \\
+\hline
+DSL & 24-52 Mbps & No & Phone lines & Low \\
+Cable & 40-1000 Mbps & Yes & Coax + Fiber & Medium \\
+FTTH & 100 Mbps-10 Gbps & Somewhat & Fiber & High \\
+5G Fixed & 100+ Mbps & Wireless & None & Medium \\
+\hline
+\end{tabular}
+\caption{Access Network Technologies}
+\end{table}
+
+% ============================================
+\section{Packet Switching}
+
+\subsection{Store-and-Forward Transmission}
+
+\begin{exambox}{Definition: Store-and-Forward}
+A packet switch must receive the \textbf{entire} packet before it can begin transmitting the packet on the outbound link.
+\end{exambox}
+
+\textbf{End-to-End Delay Formula:}
+\begin{equation}
+d_{end-to-end} = N \times \frac{L}{R}
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item $N$ = number of links
+    \item $L$ = packet length (bits)
+    \item $R$ = transmission rate (bps)
+\end{itemize}
+
+\begin{examplebox}{Delay Calculation Example}
+Packet: $L = 1500$ bytes $= 12,000$ bits \\
+Link speed: $R = 1$ Mbps $= 1,000,000$ bps \\
+Number of links: $N = 3$
+
+\textbf{Solution:}
+\begin{align*}
+\text{Delay per link} &= \frac{L}{R} = \frac{12,000}{1,000,000} = 0.012 \text{ sec} = 12 \text{ ms} \\
+\text{Total delay} &= 3 \times 12 = 36 \text{ ms}
+\end{align*}
+\end{examplebox}
+
+\subsection{Queuing and Packet Loss}
+
+\textbf{Output Queue:}
+\begin{itemize}
+    \item Packets wait in queue before transmission
+    \item Queue length depends on arrival rate vs. transmission rate
+    \item Finite buffer size
+\end{itemize}
+
+\textbf{Packet Loss:}
+\begin{itemize}
+    \item Occurs when buffer is full
+    \item Arriving packet must be dropped
+    \item Causes: Arrival rate $>$ Transmission rate
+\end{itemize}
+
+% ============================================
+\section{Circuit Switching}
+
+\begin{exambox}{Definition: Circuit Switching}
+A dedicated communication path (circuit) is established for the entire duration of a communication session with reserved resources.
+\end{exambox}
+
+\subsection{Multiplexing Methods}
+
+\subsubsection{FDM (Frequency Division Multiplexing)}
+\begin{itemize}
+    \item Divides frequency bandwidth into bands
+    \item Each circuit gets dedicated frequency band
+    \item All transmit simultaneously
+    \item Example: Radio stations on different frequencies
+\end{itemize}
+
+\subsubsection{TDM (Time Division Multiplexing)}
+\begin{itemize}
+    \item Divides time into frames and slots
+    \item Each circuit gets specific time slots
+    \item Circuits take turns transmitting
+    \item Example: Each connection gets 1/4 of time in 4-way TDM
+\end{itemize}
+
+\subsection{Packet vs Circuit Switching}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+\textbf{Feature} & \textbf{Packet Switching} & \textbf{Circuit Switching} \\
+\hline
+Resources & On-demand & Reserved (dedicated) \\
+Setup & No setup & Connection setup required \\
+Sharing & Statistical multiplexing & TDM or FDM \\
+Efficiency & High & Low (idle waste) \\
+Delay & Variable (queuing) & Fixed (no queuing) \\
+Suited For & Bursty data & Voice, video \\
+\hline
+\end{tabular}
+\caption{Packet vs Circuit Switching Comparison}
+\end{table}
+
+% ============================================
+\chapter{Application Layer}
+
+\section{Principles of Network Applications}
+
+\subsection{Client-Server Architecture}
+
+\begin{exambox}{Definition: Client-Server}
+Client-server architecture features a dedicated always-on server that services requests from multiple client hosts, where clients don't directly communicate with each other.
+\end{exambox}
+
+\textbf{Server Characteristics:}
+\begin{itemize}
+    \item Always-on (24/7 availability)
+    \item Fixed, well-known IP address
+    \item Powerful hardware
+    \item Located in data centers
+\end{itemize}
+
+\textbf{Client Characteristics:}
+\begin{itemize}
+    \item Intermittently connected
+    \item Dynamic IP addresses
+    \item Initiate communication
+    \item Don't communicate directly with other clients
+\end{itemize}
+
+\subsection{P2P Architecture}
+
+\begin{exambox}{Definition: Peer-to-Peer}
+P2P architecture features minimal reliance on dedicated servers where intermittently connected peers communicate directly, with each peer acting as both client and server.
+\end{exambox}
+
+\textbf{Self-Scalability:}
+\begin{itemize}
+    \item More peers = More resources
+    \item Each peer provides and consumes resources
+    \item Cost-effective (no server infrastructure)
+    \item Examples: BitTorrent, Bitcoin
+\end{itemize}
+
+\subsection{Sockets and Port Numbers}
+
+\begin{conceptbox}{Socket Analogy}
+\textbf{Socket} = Door of your house \\
+\textbf{Process} = Person inside \\
+\textbf{Network} = Street outside \\
+\\
+Messages sent through door (socket) to postal service (transport layer).
+\end{conceptbox}
+
+\textbf{Port Number Ranges:}
+\begin{itemize}
+    \item \textbf{Well-Known (0-1023):} HTTP (80), HTTPS (443), SMTP (25), DNS (53)
+    \item \textbf{Registered (1024-49151):} MySQL (3306), PostgreSQL (5432)
+    \item \textbf{Dynamic (49152-65535):} Temporary client ports
+\end{itemize}
+
+% ============================================
+\section{HTTP (HyperText Transfer Protocol)}
+
+\begin{exambox}{Definition: HTTP}
+HTTP is the application layer protocol of the World Wide Web that defines how clients request web pages and servers transfer them, using TCP as transport.
+\end{exambox}
+
+\subsection{HTTP Characteristics}
+
+\textbf{Stateless Protocol:}
+\begin{itemize}
+    \item Server maintains NO information about past requests
+    \item Each request is independent
+    \item Simplifies server design, improves scalability
+    \item State maintained using cookies
+\end{itemize}
+
+\subsection{Persistent vs Non-Persistent Connections}
+
+\textbf{Non-Persistent HTTP (HTTP/1.0):}
+\begin{itemize}
+    \item New TCP connection for each object
+    \item High overhead (multiple handshakes)
+    \item Response time: $2 \times RTT + $ transmission time per object
+\end{itemize}
+
+\textbf{Persistent HTTP (HTTP/1.1):}
+\begin{itemize}
+    \item Multiple objects over same connection
+    \item Reduced overhead
+    \item Faster page loading
+    \item Default mode
+\end{itemize}
+
+\begin{examplebox}{RTT Comparison}
+Page with 1 base HTML + 10 images:
+
+\textbf{Non-Persistent:}
+\begin{itemize}
+    \item 11 TCP connections
+    \item Total: $22 \times RTT$ + transmission
+\end{itemize}
+
+\textbf{Persistent:}
+\begin{itemize}
+    \item 1 TCP connection
+    \item Total: $12 \times RTT$ + transmission
+    \item 45\% faster!
+\end{itemize}
+\end{examplebox}
+
+\subsection{HTTP Message Format}
+
+\textbf{Request Message:}
+\begin{verbatim}
+GET /index.html HTTP/1.1
+Host: www.example.com
+Connection: close
+User-agent: Mozilla/5.0
+Accept-language: en
+\end{verbatim}
+
+\textbf{Response Message:}
+\begin{verbatim}
+HTTP/1.1 200 OK
+Date: Mon, 10 Dec 2025 12:00:00 GMT
+Server: Apache/2.4
+Content-Length: 1024
+Content-Type: text/html
+
+<html>...</html>
+\end{verbatim}
+
+\textbf{Common Status Codes:}
+\begin{itemize}
+    \item \textbf{200 OK:} Success
+    \item \textbf{301 Moved Permanently:} Redirect
+    \item \textbf{400 Bad Request:} Client error
+    \item \textbf{404 Not Found:} Resource doesn't exist
+    \item \textbf{500 Internal Server Error:} Server error
+\end{itemize}
+
+\subsection{Cookies}
+
+\begin{exambox}{Definition: Cookies}
+Cookies are small pieces of data stored on the client side that enable websites to track users and maintain session state despite HTTP being stateless.
+\end{exambox}
+
+\textbf{Four Components:}
+\begin{enumerate}
+    \item Cookie header in HTTP response (Set-Cookie)
+    \item Cookie header in HTTP request (Cookie)
+    \item Cookie file on client's browser
+    \item Backend database on server
+\end{enumerate}
+
+\subsection{Web Caching}
+
+\textbf{Benefits:}
+\begin{itemize}
+    \item Reduced response time
+    \item Reduced traffic on access link
+    \item Reduced load on origin server
+    \item Better user experience
+\end{itemize}
+
+\textbf{Conditional GET:}
+\begin{verbatim}
+Request:
+GET /page.html HTTP/1.1
+If-Modified-Since: Mon, 10 Dec 2025 10:00:00 GMT
+
+Response (Not Modified):
+HTTP/1.1 304 Not Modified
+
+Response (Modified):
+HTTP/1.1 200 OK
+Last-Modified: Mon, 10 Dec 2025 14:00:00 GMT
+[new content]
+\end{verbatim}
+
+% ============================================
+\section{Email and SMTP}
+
+\subsection{Email Components}
+
+\begin{itemize}
+    \item \textbf{User Agents:} Outlook, Gmail, Thunderbird
+    \item \textbf{Mail Servers:} Store mailboxes, implement SMTP
+    \item \textbf{SMTP:} Simple Mail Transfer Protocol (Port 25)
+\end{itemize}
+
+\subsection{SMTP Basics}
+
+\textbf{SMTP Dialog:}
+\begin{verbatim}
+S: 220 mail.example.com
+C: HELO sender.com
+S: 250 Hello sender.com
+C: MAIL FROM: <alice@sender.com>
+S: 250 OK
+C: RCPT TO: <bob@example.com>
+S: 250 OK
+C: DATA
+S: 354 Send message, end with .
+C: Subject: Hello
+C: 
+C: This is the message body.
+C: .
+S: 250 Message accepted
+C: QUIT
+S: 221 Closing connection
+\end{verbatim}
+
+\subsection{Mail Access Protocols}
+
+\begin{itemize}
+    \item \textbf{IMAP:} Manage emails remotely on server
+    \item \textbf{HTTP:} Web-based email (Gmail, Yahoo)
+\end{itemize}
+
+% ============================================
+\chapter{Transport Layer}
+
+\section{Transport Layer Services}
+
+\begin{exambox}{Definition: Transport Layer}
+The transport layer provides logical communication between application processes running on different hosts, extending network layer's host-to-host delivery to process-to-process delivery.
+\end{exambox}
+
+\subsection{Multiplexing and Demultiplexing}
+
+\textbf{Multiplexing (Sender):}
+\begin{itemize}
+    \item Gather data from multiple sockets
+    \item Add transport headers (create segments)
+    \item Pass to network layer
+\end{itemize}
+
+\textbf{Demultiplexing (Receiver):}
+\begin{itemize}
+    \item Receive segments from network layer
+    \item Examine port numbers
+    \item Deliver to correct socket
+\end{itemize}
+
+\subsection{UDP Socket Identification}
+
+\textbf{Two-tuple:} (Destination IP, Destination Port)
+
+\begin{itemize}
+    \item Same destination $\rightarrow$ Same socket
+    \item Source port used as "return address"
+    \item Connectionless
+\end{itemize}
+
+\subsection{TCP Socket Identification}
+
+\textbf{Four-tuple:} (Source IP, Source Port, Dest IP, Dest Port)
+
+\begin{itemize}
+    \item Each connection gets unique socket
+    \item Welcoming socket listens for new connections
+    \item Connection sockets handle established connections
+\end{itemize}
+
+% ============================================
+\section{UDP (User Datagram Protocol)}
+
+\begin{exambox}{Definition: UDP}
+UDP is a minimalist, connectionless transport protocol providing multiplexing/demultiplexing and basic error checking without reliability, flow control, or congestion control.
+\end{exambox}
+
+\subsection{UDP Header (8 bytes)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Source Port (16 bits) & Destination Port (16 bits) \\
+\hline
+Length (16 bits) & Checksum (16 bits) \\
+\hline
+\multicolumn{2}{|c|}{Data / Payload} \\
+\hline
+\end{tabular}
+\caption{UDP Header Format}
+\end{table}
+
+\subsection{UDP Checksum}
+
+\begin{conceptbox}{Checksum Calculation}
+\textbf{Sender:}
+\begin{enumerate}
+    \item Treat segment as 16-bit words
+    \item Add all words (wrap overflow)
+    \item Take 1's complement
+    \item Result = Checksum
+\end{enumerate}
+
+\textbf{Receiver:}
+\begin{enumerate}
+    \item Add all words including checksum
+    \item If result = all 1s $\rightarrow$ No error
+    \item Else $\rightarrow$ Error detected
+\end{enumerate}
+\end{conceptbox}
+
+% ============================================
+\section{TCP (Transmission Control Protocol)}
+
+\begin{exambox}{Definition: TCP}
+TCP is a connection-oriented, reliable transport protocol providing full-duplex, point-to-point communication with flow control, congestion control, and in-order delivery.
+\end{exambox}
+
+\subsection{TCP Characteristics}
+
+\begin{itemize}
+    \item \textbf{Connection-oriented:} 3-way handshake
+    \item \textbf{Reliable:} Retransmits lost segments
+    \item \textbf{In-order delivery:} Sequence numbers
+    \item \textbf{Flow control:} Prevent receiver overflow
+    \item \textbf{Congestion control:} Prevent network congestion
+\end{itemize}
+
+\subsection{TCP Header (20-60 bytes)}
+
+\textbf{Key Fields:}
+\begin{itemize}
+    \item Sequence Number (32 bits)
+    \item Acknowledgment Number (32 bits)
+    \item Receive Window (16 bits)
+    \item Checksum (16 bits)
+    \item Flags: SYN, ACK, FIN, RST, PSH, URG
+\end{itemize}
+
+\subsection{RTT Estimation}
+
+\begin{align}
+\text{EstimatedRTT} &= (1-\alpha) \times \text{EstimatedRTT} + \alpha \times \text{SampleRTT} \\
+\alpha &= 0.125 \\
+\\
+\text{DevRTT} &= (1-\beta) \times \text{DevRTT} + \beta \times |\text{SampleRTT} - \text{EstimatedRTT}| \\
+\beta &= 0.25 \\
+\\
+\text{TimeoutInterval} &= \text{EstimatedRTT} + 4 \times \text{DevRTT}
+\end{align}
+
+\subsection{Three-Way Handshake}
+
+\begin{enumerate}
+    \item \textbf{Client $\rightarrow$ Server:} SYN (Seq=x)
+    \item \textbf{Server $\rightarrow$ Client:} SYN-ACK (Seq=y, ACK=x+1)
+    \item \textbf{Client $\rightarrow$ Server:} ACK (Seq=x+1, ACK=y+1)
+\end{enumerate}
+
+\subsection{Flow Control}
+
+\begin{equation}
+\text{rwnd} = \text{RcvBuffer} - [\text{LastByteRcvd} - \text{LastByteRead}]
+\end{equation}
+
+Sender ensures:
+\begin{equation}
+\text{LastByteSent} - \text{LastByteAcked} \leq \text{rwnd}
+\end{equation}
+
+% ============================================
+\chapter{Network Layer - Data Plane}
+
+\section{Overview}
+
+\subsection{Forwarding vs Routing}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+\textbf{Feature} & \textbf{Forwarding} & \textbf{Routing} \\
+\hline
+Scope & Local (single router) & Global (entire network) \\
+Function & Move packet to output & Determine end-to-end path \\
+Speed & Nanoseconds & Milliseconds to seconds \\
+Implementation & Hardware & Software \\
+Plane & Data plane & Control plane \\
+\hline
+\end{tabular}
+\caption{Forwarding vs Routing}
+\end{table}
+
+% ============================================
+\section{Router Architecture}
+
+\subsection{Components}
+
+\begin{enumerate}
+    \item \textbf{Input Ports:} Receive packets, lookup, forward
+    \item \textbf{Switching Fabric:} Connect input to output ports
+    \item \textbf{Output Ports:} Queue, schedule, transmit packets
+    \item \textbf{Routing Processor:} Control plane operations
+\end{enumerate}
+
+\subsection{Switching Fabric Types}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Type} & \textbf{Speed} & \textbf{Parallelism} & \textbf{Cost} \\
+\hline
+Memory & Slowest & None & Low \\
+Bus & Medium & None & Medium \\
+Crossbar & Fastest & Yes & High \\
+\hline
+\end{tabular}
+\caption{Switching Fabric Comparison}
+\end{table}
+
+% ============================================
+\section{IP Addressing}
+
+\subsection{IPv4 Datagram Format}
+
+\textbf{Key Fields:}
+\begin{itemize}
+    \item Version (4 bits): IPv4 = 4
+    \item Header Length (4 bits): Typically 5 (20 bytes)
+    \item Total Length (16 bits): Max 65,535 bytes
+    \item TTL (8 bits): Hop limit
+    \item Protocol (8 bits): TCP=6, UDP=17
+    \item Source/Dest IP (32 bits each)
+\end{itemize}
+
+\subsection{CIDR (Classless Interdomain Routing)}
+
+\begin{exambox}{CIDR Notation}
+\textbf{Format:} a.b.c.d/x
+
+\textbf{Example:} 192.168.1.0/24
+\begin{itemize}
+    \item First 24 bits: Network prefix
+    \item Last 8 bits: Host part
+    \item Total addresses: $2^8 = 256$
+\end{itemize}
+\end{exambox}
+
+\subsection{DHCP (Dynamic Host Configuration Protocol)}
+
+\textbf{4-Step Process:}
+\begin{enumerate}
+    \item \textbf{DHCP DISCOVER:} Client broadcasts
+    \item \textbf{DHCP OFFER:} Server responds with IP
+    \item \textbf{DHCP REQUEST:} Client accepts offer
+    \item \textbf{DHCP ACK:} Server confirms assignment
+\end{enumerate}
+
+\subsection{NAT (Network Address Translation)}
+
+\begin{conceptbox}{NAT Operation}
+\textbf{Private network $\rightarrow$ Internet:}
+\begin{itemize}
+    \item Replace (source IP, source port)
+    \item With (NAT IP, new port)
+    \item Store in NAT translation table
+\end{itemize}
+
+\textbf{Internet $\rightarrow$ Private network:}
+\begin{itemize}
+    \item Look up (NAT IP, port) in table
+    \item Replace with (private IP, original port)
+\end{itemize}
+\end{conceptbox}
+
+% ============================================
+\chapter{Network Layer - Control Plane}
+
+\section{Routing Algorithms}
+
+\subsection{Distance Vector vs Link State}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+\textbf{Feature} & \textbf{Distance Vector} & \textbf{Link State} \\
+\hline
+Algorithm & Bellman-Ford & Dijkstra \\
+Knowledge & Neighbors only & Entire topology \\
+Exchange & Routing tables & Link state packets \\
+Updates & Periodic/Triggered & Event-driven \\
+Convergence & Slow & Fast \\
+Example & RIP, EIGRP & OSPF, IS-IS \\
+\hline
+\end{tabular}
+\caption{Routing Algorithms Comparison}
+\end{table}
+
+% ============================================
+\section{OSPF (Open Shortest Path First)}
+
+\begin{exambox}{Definition: OSPF}
+OSPF is a link-state intra-AS routing protocol using Dijkstra's algorithm to compute shortest paths within an autonomous system.
+\end{exambox}
+
+\subsection{OSPF Features}
+
+\begin{itemize}
+    \item \textbf{Security:} MD5 authentication
+    \item \textbf{Multiple paths:} ECMP support
+    \item \textbf{Hierarchical:} Area-based design
+    \item \textbf{Multicast:} MOSPF extension
+\end{itemize}
+
+% ============================================
+\section{BGP (Border Gateway Protocol)}
+
+\begin{exambox}{Definition: BGP}
+BGP is the inter-domain routing protocol enabling communication between autonomous systems through policy-based path selection.
+\end{exambox}
+
+\subsection{BGP Attributes}
+
+\begin{itemize}
+    \item \textbf{AS-PATH:} List of ASs traversed (loop prevention)
+    \item \textbf{NEXT-HOP:} IP of next-hop router
+    \item \textbf{LOCAL-PREF:} Local preference
+    \item \textbf{MED:} Multi-Exit Discriminator
+\end{itemize}
+
+\subsection{Hot Potato Routing}
+
+\begin{conceptbox}{Hot Potato Concept}
+Minimize intra-AS cost to reach exit point, regardless of inter-AS path cost. "Get rid of packet ASAP!"
+\end{conceptbox}
+
+% ============================================
+\chapter{Link Layer and LANs}
+
+\section{Error Detection}
+
+\subsection{Parity Checks}
+
+\textbf{Even Parity:} Total 1s must be even
+\textbf{Odd Parity:} Total 1s must be odd
+
+\textbf{Limitation:} Cannot detect even-numbered bit errors
+
+\subsection{Checksums}
+
+\begin{enumerate}
+    \item Sum all 16-bit words
+    \item Wrap overflow
+    \item Take 1's complement
+    \item Receiver verifies by summing all (should be all 1s)
+\end{enumerate}
+
+\subsection{CRC (Cyclic Redundancy Check)}
+
+\textbf{Process:}
+\begin{enumerate}
+    \item Treat data as polynomial
+    \item Divide by generator polynomial (XOR)
+    \item Remainder = CRC
+    \item Append to data
+    \item Receiver divides by same generator
+    \item Zero remainder = No error
+\end{enumerate}
+
+% ============================================
+\section{Multiple Access Protocols}
+
+\subsection{Channel Partitioning}
+
+\begin{itemize}
+    \item \textbf{TDM:} Divide time into slots
+    \item \textbf{FDM:} Divide frequency bands
+    \item \textbf{CDMA:} Unique codes for each node
+\end{itemize}
+
+\subsection{Random Access}
+
+\textbf{ALOHA Protocols:}
+\begin{itemize}
+    \item \textbf{Pure ALOHA:} Transmit immediately, 18\% efficiency
+    \item \textbf{Slotted ALOHA:} Synchronized slots, 37\% efficiency
+\end{itemize}
+
+\textbf{CSMA Protocols:}
+\begin{itemize}
+    \item \textbf{CSMA/CD:} Collision detection (Ethernet)
+    \item \textbf{CSMA/CA:} Collision avoidance (WiFi)
+\end{itemize}
+
+\subsection{Taking Turns}
+
+\begin{itemize}
+    \item \textbf{Polling:} Master node controls access
+    \item \textbf{Token Passing:} Token circulates among nodes
+    \item \textbf{Reservation:} Reserve time slots in advance
+\end{itemize}
+
+% ============================================
+\section{MAC Addressing}
+
+\begin{exambox}{Definition: MAC Address}
+MAC address is a unique 48-bit physical address permanently assigned to each network adapter for identification in local networks.
+\end{exambox}
+
+\textbf{Format:} 6 bytes in hexadecimal (e.g., 1A:2B:3C:4D:5E:6F)
+
+\subsection{ARP (Address Resolution Protocol)}
+
+\textbf{Process:}
+\begin{enumerate}
+    \item Check ARP table for IP$\rightarrow$MAC mapping
+    \item If not found, broadcast ARP query
+    \item Destination responds with MAC address
+    \item Update ARP table (with TTL)
+    \item Send data using MAC address
+\end{enumerate}
+
+% ============================================
+\section{VLANs}
+
+\begin{exambox}{Definition: VLAN}
+A VLAN is a logical grouping of devices into separate broadcast domains through switch configuration, providing traffic isolation.
+\end{exambox}
+
+\subsection{VLAN Benefits}
+
+\begin{itemize}
+    \item Traffic isolation
+    \item Dynamic membership
+    \item Better resource utilization
+    \item Simplified management
+\end{itemize}
+
+\subsection{VLAN Trunking (802.1Q)}
+
+\textbf{Trunk Port:} Carries traffic for multiple VLANs
+
+\textbf{VLAN Tag (4 bytes):}
+\begin{itemize}
+    \item TPID (2 bytes): 0x8100
+    \item TCI (2 bytes): PCP (3 bits) + DEI (1 bit) + VLAN ID (12 bits)
+\end{itemize}
+
+% ============================================
+% Summary and Exam Tips
+% ============================================
+
+\chapter{Exam Preparation Summary}
+
+\section{Key Formulas}
+
+\begin{align}
+\text{Transmission Delay} &= \frac{L}{R} \\
+\text{Packet Switching Delay} &= N \times \frac{L}{R} \\
+\text{EstimatedRTT} &= (1-\alpha) \times \text{EstimatedRTT} + \alpha \times \text{SampleRTT} \\
+\text{TimeoutInterval} &= \text{EstimatedRTT} + 4 \times \text{DevRTT} \\
+\text{rwnd} &= \text{RcvBuffer} - [\text{LastByteRcvd} - \text{LastByteRead}]
+\end{align}
+
+\section{Important Port Numbers}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Protocol} & \textbf{Port} & \textbf{Description} \\
+\hline
+HTTP & 80 & Web traffic \\
+HTTPS & 443 & Secure web \\
+SMTP & 25 & Email sending \\
+DNS & 53 & Name resolution \\
+FTP & 20, 21 & File transfer \\
+SSH & 22 & Secure shell \\
+\hline
+\end{tabular}
+\caption{Common Port Numbers}
+\end{table}
+
+\section{Critical Comparisons}
+
+\textbf{Must Know:}
+\begin{itemize}
+    \item Packet Switching vs Circuit Switching
+    \item TCP vs UDP
+    \item Distance Vector vs Link State
+    \item OSPF vs BGP
+    \item CSMA/CD vs CSMA/CA
+    \item IPv4 vs IPv6
+\end{itemize}
+
+\section{Exam Tips}
+
+\begin{enumerate}
+    \item \textbf{Understand concepts}, not just memorize
+    \item \textbf{Draw diagrams} for protocol operations
+    \item \textbf{Practice calculations} (delay, throughput)
+    \item \textbf{Know protocol headers} and fields
+    \item \textbf{Explain "why"} mechanisms exist
+    \item \textbf{Compare and contrast} similar protocols
+\end{enumerate}
+
+% ============================================
+\end{document}
